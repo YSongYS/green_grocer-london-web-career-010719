@@ -21,7 +21,7 @@ def apply_coupons(cart, coupons)
     next if cart_item.nil? || cart_item[:count] < coupon_item_num
       cart_item[:count] -= coupon_item_num
     coupon_in_cart = cart["#{coupon_name} W/COUPON"]
-    if c  oupon_in_cart
+    if coupon_in_cart
       coupon_in_cart[:count] += 1
     else
       cart["#{coupon_name} W/COUPON"] = {
@@ -34,7 +34,7 @@ def apply_coupons(cart, coupons)
   cart
 end
 
-def apply_clearance(cart:[])
+def apply_clearance(cart)
   # code here
   cart.each do |item_name, item_data|
     if item_data[:clearance]
@@ -43,11 +43,11 @@ def apply_clearance(cart:[])
   end
 end
 
-def checkout(cart: [], coupons: [])
+def checkout(cart, coupons)
   # code here
-  cart = consolidate_cart(cart: cart)
-  cart = apply_coupons(cart: cart, coupons: coupons)
-  cart = apply_clearance(cart: cart)
+  cart = consolidate_cart(cart)
+  cart = apply_coupons(cart, coupons)
+  cart = apply_clearance(cart)
   total = 0
   cart.each do |item_name, item_data|
     total += (item_data[:price] * item_data[:count])
